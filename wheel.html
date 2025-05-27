@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wheel Spin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🎡 Wheel Spin</h1>
+  <p>💰 Coins: <span id="coins">0</span></p>
+  <p>Spin Result: <span id="result">-</span></p>
+  <button onclick="spin()">Spin (-10 coins)</button>
+  <p id="message"></p>
+  <p><a href="index.html">← Back</a></p>
+
+  <script>
+    let coins = parseInt(localStorage.getItem("coins") || "0");
+    document.getElementById("coins").innerText = coins;
+
+    const sectors = [
+      { label: "2x", multiplier: 2 },
+      { label: "5x", multiplier: 5 },
+      { label: "10x", multiplier: 10 },
+      { label: "0x", multiplier: 0 },
+      { label: "3x", multiplier: 3 },
+      { label: "1x", multiplier: 1 },
+      { label: "Bankrupt", multiplier: 0 },
+    ];
+
+    function spin() {
+      if (coins < 10) {
+        alert("Not enough coins!");
+        return;
+      }
+
+      coins -= 10;
+      const sector = sectors[Math.floor(Math.random() * sectors.length)];
+      document.getElementById("result").innerText = sector.label;
+
+      const win = sector.multiplier * 10;
+      coins += win;
+      document.getElementById("coins").innerText = coins;
+      localStorage.setItem("coins", coins);
+
+      if (sector.multiplier === 0) {
+        document.getElementById("message").innerText = "😢 No winnings!";
+      } else {
+        document.getElementById("message").innerText = `🎉 You won ${win} coins!`;
+      }
+    }
+  </script>
+</body>
+</html>
