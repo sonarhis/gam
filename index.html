@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Free Gambling Games</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🎲 Free Gambling Games</h1>
+  <p>💰 Coins: <span id="coins">0</span></p>
+  <ul>
+    <li><a href="slots.html">🎰 Play Slots</a></li>
+    <li><a href="crash.html">📉 Play Crash</a></li>
+    <li><a href="wheel.html">🎡 Play Wheel Spin</a></li>
+  </ul>
+
+  <script>
+    let coins = localStorage.getItem("coins");
+    if (!coins) {
+      coins = 1000;
+      localStorage.setItem("coins", coins);
+    }
+    document.getElementById("coins").innerText = coins;
+  </script>
+</body>
+</html>
