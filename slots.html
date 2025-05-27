@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Slots</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🎰 Slots</h1>
+  <p>💰 Coins: <span id="coins">0</span></p>
+  <div id="reels">❓ ❓ ❓</div>
+  <button onclick="spin()">Spin (-10 coins)</button>
+  <p id="result"></p>
+  <p><a href="index.html">← Back</a></p>
+
+  <script>
+    const symbols = ["🍒", "🍋", "🍉", "⭐", "💎"];
+    let coins = parseInt(localStorage.getItem("coins") || "0");
+    document.getElementById("coins").innerText = coins;
+
+    function spin() {
+      if (coins < 10) {
+        alert("Not enough coins!");
+        return;
+      }
+
+      coins -= 10;
+      const r = [
+        symbols[Math.floor(Math.random() * symbols.length)],
+        symbols[Math.floor(Math.random() * symbols.length)],
+        symbols[Math.floor(Math.random() * symbols.length)]
+      ];
+      document.getElementById("reels").innerText = r.join(" ");
+
+      if (r[0] === r[1] && r[1] === r[2]) {
+        coins += 100;
+        document.getElementById("result").innerText = "💎 JACKPOT! +100 coins!";
+      } else if (r[0] === r[1] || r[1] === r[2] || r[0] === r[2]) {
+        coins += 25;
+        document.getElementById("result").innerText = "✨ Pair! +25 coins!";
+      } else {
+        document.getElementById("result").innerText = "❌ No match.";
+      }
+
+      localStorage.setItem("coins", coins);
+      document.getElementById("coins").innerText = coins;
+    }
+  </script>
+</body>
+</html>
