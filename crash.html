@@ -65,7 +65,7 @@
       clearInterval(interval);
       cashedOut = true;
       running = false;
-      const win = Math.floor(10 * multiplier);
+      const win = Math.floor(10000 * multiplier);
       coins += win;
       localStorage.setItem("coins", coins);
       coinsDisplay.innerText = coins;
