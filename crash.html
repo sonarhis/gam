@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crash</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>📉 Crash</h1>
+  <p>💰 Coins: <span id="coins">0</span></p>
+  <p>Multiplier: <span id="multiplier">1.00x</span></p>
+  <button onclick="startGame()" id="startBtn">Start</button>
+  <button onclick="cashOut()" id="cashOutBtn" disabled>Cash Out</button>
+  <p id="result"></p>
+  <p><a href="index.html">← Back</a></p>
+
+  <script>
+    let coins = parseInt(localStorage.getItem("coins") || "0");
+    let multiplier = 1;
+    let interval;
+    let running = false;
+    let cashedOut = false;
+
+    const coinsDisplay = document.getElementById("coins");
+    const multiplierDisplay = document.getElementById("multiplier");
+    const resultDisplay = document.getElementById("result");
+
+    coinsDisplay.innerText = coins;
+
+    function startGame() {
+      if (coins < 10) {
+        alert("Not enough coins!");
+        return;
+      }
+
+      coins -= 10;
+      localStorage.setItem("coins", coins);
+      coinsDisplay.innerText = coins;
+      multiplier = 1;
+      running = true;
+      cashedOut = false;
+      resultDisplay.innerText = "";
+      document.getElementById("startBtn").disabled = true;
+      document.getElementById("cashOutBtn").disabled = false;
+
+      interval = setInterval(() => {
+        multiplier += 0.05;
+        multiplierDisplay.innerText = multiplier.toFixed(2) + "x";
+
+        // Simulate crash
+        if (Math.random() < 0.02 + multiplier / 100) {
