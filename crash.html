@@ -48,3 +48,31 @@
 
         // Simulate crash
         if (Math.random() < 0.02 + multiplier / 100) {
+          clearInterval(interval);
+          running = false;
+          document.getElementById("startBtn").disabled = false;
+          document.getElementById("cashOutBtn").disabled = true;
+          if (!cashedOut) {
+            resultDisplay.innerText = "💥 CRASHED! You lost your bet.";
+          }
+        }
+      }, 100);
+    }
+
+    function cashOut() {
+      if (!running || cashedOut) return;
+
+      clearInterval(interval);
+      cashedOut = true;
+      running = false;
+      const win = Math.floor(10 * multiplier);
+      coins += win;
+      localStorage.setItem("coins", coins);
+      coinsDisplay.innerText = coins;
+      resultDisplay.innerText = `✅ Cashed out at ${multiplier.toFixed(2)}x! +${win} coins`;
+      document.getElementById("startBtn").disabled = false;
+      document.getElementById("cashOutBtn").disabled = true;
+    }
+  </script>
+</body>
+</html>
